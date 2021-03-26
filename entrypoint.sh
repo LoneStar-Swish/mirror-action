@@ -35,16 +35,16 @@ git config --global credential.username "${GIT_USERNAME}"
 
 
 if [[ "${GIT_SSH_PRIVATE_KEY}" != "" ]]; then
-    mkdir ~/.ssh
-    chmod 700 ~/.ssh
-    echo "${GIT_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+    mkdir /github/home/.ssh
+    chmod 700 /github/home/.ssh
+    echo "${GIT_SSH_PRIVATE_KEY}" > /github/home/.ssh/id_rsa
     if [[ "${GIT_SSH_PUBLIC_KEY}" != "" ]]; then
-        echo "${GIT_SSH_PUBLIC_KEY}" > ~/.ssh/id_rsa.pub
-        chmod 600 ~/.ssh/id_rsa.pub
+        echo "${GIT_SSH_PUBLIC_KEY}" > /github/home/.ssh/id_rsa.pub
+        chmod 600 /github/home/.ssh/id_rsa.pub
     fi
-    chmod 600 ~/.ssh/id_rsa
+    chmod 600 /github/home/.ssh/id_rsa
     if [[ "${GIT_SSH_KNOWN_HOSTS}" != "" ]]; then
-      echo "${GIT_SSH_KNOWN_HOSTS}" > ~/.ssh/known_hosts
+      echo "${GIT_SSH_KNOWN_HOSTS}" > /github/home/.ssh/known_hosts
       git config --global core.sshCommand "ssh -i /github/home/.ssh/id_rsa -o IdentitiesOnly=yes -o UserKnownHostsFile=/github/home/.ssh/known_hosts"
     else
       if [[ "${GIT_SSH_NO_VERIFY_HOST}" != "true" ]]; then
@@ -53,7 +53,7 @@ if [[ "${GIT_SSH_PRIVATE_KEY}" != "" ]]; then
         echo "Please either provide the GIT_SSH_KNOWN_HOSTS or GIT_SSH_NO_VERIFY_HOST inputs"
         exit 1
       else
-        git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+        git config --global core.sshCommand "ssh -i /github/home/.ssh/id_rsa -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
       fi
     fi
 else
